@@ -1,6 +1,9 @@
 #include "inputHandler.hpp"
 #include <windows.h>
 
+/**
+ * For later.
+ */
 InputAction InputHandler::handleKey(int vkCode)
 {
     switch (vkCode)

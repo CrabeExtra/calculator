@@ -47,8 +47,6 @@ void Window::createWindow() {
     {
         return;
     }
-
-    ShowWindow(hwnd, nCmdShow);
 }
 
 
