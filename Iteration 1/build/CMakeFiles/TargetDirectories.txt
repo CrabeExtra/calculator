@@ -1,7 +1,0 @@
-C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/CMakeFiles/CalculatorWin.dir
-C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/core/CMakeFiles/core.dir
-C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/platform/win32/CMakeFiles/win_platform.dir
-C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/ui/CMakeFiles/ui.dir
-C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/app/CMakeFiles/app.dir
