@@ -1,6 +1,10 @@
-#include "window.hpp"
-
+#include <string>
+#include <vector>
+#include <iostream>
 #include "Windows.h"
+
+#include "window.hpp"
+#include "theme.hpp"
 
 Window::Window(HINSTANCE _hInstance, int _nCmdShow) {
     hInstance = _hInstance;
@@ -36,7 +40,7 @@ void Window::createWindow() {
         NULL,       // Parent window    
         NULL,       // Menu
         hInstance,  // Instance handle
-        NULL        // Additional application data
+        this        // Additional application data (just injecting window context)
         );
 
     if (hwnd == NULL)
@@ -55,15 +59,33 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     case WM_DESTROY:
         PostQuitMessage(0);
         return 0;
+    case WM_NCCREATE: 
+        {
+            // get 'this' window (this is a static callback so can't directly.)
+            CREATESTRUCT* cs = (CREATESTRUCT*)lParam;
 
+            // use 'this' to store this instance of window.
+            Window* window = (Window*)cs->lpCreateParams;
+
+            SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
+            return TRUE;
+        }
     case WM_PAINT:
         {
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hwnd, &ps);
 
-            // All painting occurs here, between BeginPaint and EndPaint.
+            SetTextColor(hdc, Theme::TextPrimary);
+            SetBkMode(hdc, TRANSPARENT);
+            FillRect(hdc, &ps.rcPaint, CreateSolidBrush(Theme::Background)); // set background colour
 
-            FillRect(hdc, &ps.rcPaint, (HBRUSH) (COLOR_WINDOW+1));
+            if(window) {
+                std::string text = window->display.getText();
+
+                TextOutA(hdc, 20, 20, text.c_str(), text.size());
+            }
 
             EndPaint(hwnd, &ps);
         }

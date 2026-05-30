@@ -1,4 +1,8 @@
 add_library(ui
-    inputHandler.cpp
     display.cpp
+    inputHandler.cpp
+)
+
+target_include_directories(ui PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )

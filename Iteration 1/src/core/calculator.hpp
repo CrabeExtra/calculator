@@ -1,3 +1,5 @@
+#pragma once
+
 
 /**
  * Basic calculator functions, as this is iteration 1, I will implement these simply. But
