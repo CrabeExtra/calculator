@@ -1,0 +1,12 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/cmake_install.cmake",
+		"C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/core/cmake_install.cmake",
+		"C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/platform/cmake_install.cmake",
+		"C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/platform/win32/cmake_install.cmake",
+		"C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/ui/cmake_install.cmake",
+		"C:/Users/Jude/Documents/Projects/Calculator/Iteration 1/build/src/app/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
