@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "layout/grid.hpp"
 
 /**
  * This is pretty basic to be honest. I'll think of more uses for this later on. At the moment though 
@@ -10,11 +11,8 @@
 class Display
 {
     public:
-        void setText(const std::string& text);
-        void append(char c);
-        void clear();
-
-        const std::string& getText() const;
+        Grid buildCalculatorLayout();
+        void drawGrid(const Grid& grid, Window& window);
 
     private:
         std::string currentText;

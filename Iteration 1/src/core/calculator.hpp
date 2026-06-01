@@ -1,6 +1,5 @@
 #pragma once
 
-
 /**
  * Basic calculator functions, as this is iteration 1, I will implement these simply. But
  * further along I want to look at handling large numbers, sorting decimal based language errors

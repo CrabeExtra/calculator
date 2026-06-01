@@ -8,6 +8,7 @@ add_subdirectory(src/core)
 add_subdirectory(src/platform)
 add_subdirectory(src/ui)
 add_subdirectory(src/app)
+add_subdirectory(src/layout)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
@@ -18,5 +19,5 @@ target_link_libraries(CalculatorWin
     platform
     ui
     app
-)
+    layout)
 

@@ -1,6 +1,6 @@
-
-#include "platform/win32/window.hpp"
+#include "platform/window.hpp"
 #include "app.hpp"
+
 /**
  * Creates the window, displays the window, begins core loop.
  */
@@ -11,5 +11,5 @@ void App::run(HINSTANCE hInstance, int nCmdShow) {
 
     window.showWindow(); // show the window (duh)
 
-    window.messageLoop(); // accept input, translate input. Need to review what this is doing..
+    window.messageLoop(); // accept input, translate input, handles any changes after showing the window.
 };

@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include "Windows.h"
 namespace Theme
 {
@@ -8,6 +10,12 @@ namespace Theme
 
     inline constexpr COLORREF Primary      = RGB(0, 120, 255);
     inline constexpr COLORREF Secondary    = RGB(80, 80, 80);
+
+    inline constexpr COLORREF ButtonFillPrimary      = RGB(30, 30, 30);
+    inline constexpr COLORREF ButtonFillSecondary    = RGB(40, 40, 40);
+
+    inline constexpr COLORREF ButtonBorderPrimary      = RGB(255, 165, 0);
+    inline constexpr COLORREF ButtonBorderSecondary    = RGB(220, 60, 60);
 
     inline constexpr COLORREF TextPrimary  = RGB(240, 240, 240);
     inline constexpr COLORREF TextMuted    = RGB(160, 160, 160);
