@@ -1,12 +1,12 @@
 #include "Windows.h"
 
-#include "app/app.hpp"
+#include "app.hpp"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow)
 {
-    App app;
+    App app(hInstance, nCmdShow);
 
-    app.run(hInstance, nCmdShow);
+    app.run();
 
     return 0;
 }

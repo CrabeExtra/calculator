@@ -74,3 +74,11 @@ uint32_t Window::getColourInt() {
         static_cast<uint8_t>(dxColour.b * 255)
     );
 }
+
+void Window::beginDraw() {
+    impl->pRenderTarget->BeginDraw();
+}
+
+void Window::endDraw() {
+    impl->pRenderTarget->EndDraw();
+}

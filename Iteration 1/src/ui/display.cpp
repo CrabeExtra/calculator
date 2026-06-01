@@ -1,10 +1,10 @@
 #include <windows.h>
 
 #include "display.hpp"
-#include "layout/grid.hpp"
-#include "platform/window.hpp"
+#include "grid.hpp"
+#include "window.hpp"
 
-Grid buildCalculatorLayout() {
+Grid Display::buildCalculatorLayout() {
     Grid g(
         "100%",
         "100%",
@@ -18,10 +18,25 @@ Grid buildCalculatorLayout() {
     return g;
 }
 
-void drawGrid(const Grid& g, Window& window){
-    for (auto& rect : g.rects)
-        window.rectangle(...);
+void Display::drawGrid(const Grid& g, Window& window){
+    for (auto& rect : g.getElements()) {
+        switch(rect.shape) {
+            case ElementShape::Rectangle:
+                window.rectangle(rect.dimensions[0], rect.dimensions[1], rect.dimensions[2], rect.dimensions[3], rect.background_color, rect.border_color);
+                break;
+            case ElementShape::RoundedRectangle:
+                window.roundedRectangle(rect.dimensions[0], rect.dimensions[1], rect.dimensions[2], rect.dimensions[3], rect.dimensions[4], rect.dimensions[5], rect.background_color, rect.border_color);
+                break;
+            case ElementShape::Ellipse:
+                window.ellipse(rect.dimensions[0], rect.dimensions[1], rect.dimensions[2], rect.dimensions[3], rect.background_color, rect.border_color);
+                break;
+            case ElementShape::Circle:
+                window.ellipse(rect.dimensions[0], rect.dimensions[1], rect.dimensions[2], rect.dimensions[2], rect.background_color, rect.border_color);
+                break;
+        }
+    }
 
-    for (auto& child : g.children)
+    for (auto& child : g.getChildren()) {
         drawGrid(child, window);
+    }
 }

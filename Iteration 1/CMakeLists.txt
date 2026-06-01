@@ -4,11 +4,7 @@ project(Calculator)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(src/core)
-add_subdirectory(src/platform)
-add_subdirectory(src/ui)
-add_subdirectory(src/app)
-add_subdirectory(src/layout)
+add_subdirectory(src)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
@@ -19,5 +15,5 @@ target_link_libraries(CalculatorWin
     platform
     ui
     app
-    layout)
-
+    layout
+)

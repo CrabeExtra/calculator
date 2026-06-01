@@ -1,7 +1,8 @@
 #pragma once
 
 #include <string>
-#include "layout/grid.hpp"
+#include "grid.hpp"
+#include "window.hpp"
 
 /**
  * This is pretty basic to be honest. I'll think of more uses for this later on. At the moment though 

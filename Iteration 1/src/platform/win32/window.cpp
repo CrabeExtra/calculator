@@ -1,16 +1,19 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <functional>
 #include "Windows.h"
 
 #include "../window.hpp"
 #include "../theme.hpp"
 #include "window_impl.hpp"
+#include "app.hpp"
 
-Window::Window(HINSTANCE _hInstance, int _nCmdShow) {
+Window::Window(HINSTANCE _hInstance, int _nCmdShow, std::function<void()> render) {
     impl = new Impl();
     impl->hInstance = _hInstance;
     impl->nCmdShow = _nCmdShow;
+    impl->render = render;
 }
 
 void Window::createWindow() {
@@ -105,12 +108,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                     (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
                 if(window) {
-                    // TODO: move beginDraw and EndDraw to another function that renders the page.
-                    window->impl->pRenderTarget->BeginDraw();
-
-                    window->roundedRectangle(0.5f, 0.5f, 100.5f, 100.5f, 10.0f, 10.0f, Theme::ButtonFillPrimary, Theme::ButtonBorderPrimary);
-
-                    window->impl->pRenderTarget->EndDraw();
+                    window->impl->render();
                 }
             }
         case WM_SIZE:

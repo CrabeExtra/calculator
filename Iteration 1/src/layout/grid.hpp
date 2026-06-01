@@ -50,7 +50,8 @@ class Grid {
             border_radius_height(border_radius_height),
             parent(parent)
         {}
-
+        std::vector<Grid> getChildren() const { return children; }
+        std::vector<GridElement> getElements() const { return elements; }
 
     private:
         std::string width;
@@ -60,6 +61,6 @@ class Grid {
         std::optional<int> border_radius_width;
         std::optional<int> border_radius_height;
         Grid* parent;
-        std::vector<Grid*> children;
+        std::vector<Grid> children;
         std::vector<GridElement> elements;
 };
