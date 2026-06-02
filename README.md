@@ -21,7 +21,6 @@ To run:
 
 TODO:
 - iteration 1
-    - I need to flatten my routing. I'll go through and add targets to each of my CMakeLists.txt files to ensure I only need to import filenames directly without paths.
     - linux support, unsure when I'll get to this, but I'm writing it so that it's kind of able to be ported.
     - Generic layout/grid system. Generic buttons etc. Button push tactility etc.
 - later iterations

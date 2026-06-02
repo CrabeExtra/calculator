@@ -12,7 +12,7 @@
 class Display
 {
     public:
-        Grid buildCalculatorLayout();
+        Grid* buildCalculatorLayout();
         void drawGrid(const Grid& grid, Window& window);
 
     private:

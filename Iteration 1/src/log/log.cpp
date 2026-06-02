@@ -5,6 +5,8 @@
 #include "log.hpp"
 
 
+
+
 void Log::trimLogFile(const std::string& filename)
 {
     std::ifstream in(filename);
@@ -19,12 +21,12 @@ void Log::trimLogFile(const std::string& filename)
     }
     in.close();
 
-    if (lines.size() <= 100)
+    if (lines.size() <= TRIM_LINES)
         return;
 
     std::ofstream out(filename, std::ios::trunc);
 
-    for (size_t i = lines.size() - 100; i < lines.size(); ++i)
+    for (size_t i = lines.size() - TRIM_LINES; i < lines.size(); ++i)
     {
         out << lines[i] << '\n';
     }

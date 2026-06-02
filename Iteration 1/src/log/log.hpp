@@ -3,6 +3,7 @@
 
 class Log {
     public:
+        static const int TRIM_LINES = 400;
         static void info(const std::string& message) {
             trimLogFile("info.log");
             std::ofstream log("info.log", std::ios::app);

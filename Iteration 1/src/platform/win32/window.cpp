@@ -9,11 +9,12 @@
 #include "window_impl.hpp"
 #include "app.hpp"
 
-Window::Window(HINSTANCE _hInstance, int _nCmdShow, std::function<void()> render) {
+Window::Window(HINSTANCE _hInstance, int _nCmdShow, std::function<void()> render, std::optional<std::function<void(float width, float height)>> onResize) {
     impl = new Impl();
     impl->hInstance = _hInstance;
     impl->nCmdShow = _nCmdShow;
     impl->render = render;
+    impl->onResize = *onResize;
 }
 
 void Window::createWindow() {
@@ -73,6 +74,16 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 
                 SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
 
+                // INITIALISE WINDOW SIZE
+                RECT rc;
+                GetClientRect(hwnd, &rc);
+
+                UINT width = rc.right - rc.left;
+                UINT height = rc.bottom - rc.top;
+
+                window->impl->height = height;
+                window->impl->width = width;
+
                 // DIRECT2D INITIALISATION
                 D2D1CreateFactory(
                     D2D1_FACTORY_TYPE_SINGLE_THREADED, // review use cases
@@ -80,7 +91,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                 );
 
                 D2D1_HWND_RENDER_TARGET_PROPERTIES hwndProps =
-                    D2D1::HwndRenderTargetProperties(hwnd, D2D1::SizeU(WINDOW_WIDTH, WINDOW_HEIGHT));
+                    D2D1::HwndRenderTargetProperties(hwnd, D2D1::SizeU(width, height));
 
                 D2D1_RENDER_TARGET_PROPERTIES rtProps =
                     D2D1::RenderTargetProperties();
@@ -98,6 +109,10 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                     &window->impl->pBrush
                 );
 
+                // initialise image loader
+                CoInitialize(nullptr);  
+                window->impl->wicFactory = nullptr;
+                
                 // TODO: handle if hr is error response 
 
                 return TRUE;
@@ -106,7 +121,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             {
                 Window* window =
                     (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-
+                
                 if(window) {
                     window->impl->render();
                 }
@@ -116,13 +131,26 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             // resize render target on window resize. Prevents stretching of components that shouldn't be stretched.
             UINT width = LOWORD(lParam);
             UINT height = HIWORD(lParam);
+
+            if(width == 0 || height == 0) return 0; // for some reason it sets my screen to (0,0) initially unless I prevent it.
+
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
             if (window->impl->pRenderTarget)
             {
+                // ensure width and height doesn't stretch (resize the render target to match new window size)
                 window->impl->pRenderTarget->Resize(D2D1::SizeU(width, height));
+
+                // refresh window size
+                window->impl->height = height;
+                window->impl->width = width;
             }
+
+            if(window->impl->onResize) {
+                window->impl->onResize((float)width, (float)height);
+            }
+            
             return 0;
         }
             return 0;
@@ -148,3 +176,6 @@ void Window::messageLoop()
         DispatchMessage(&msg);
     }
 }
+
+int Window::viewWidth() { return impl->width; }
+int Window::viewHeight() { return impl->height; }

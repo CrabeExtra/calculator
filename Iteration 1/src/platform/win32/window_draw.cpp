@@ -82,3 +82,46 @@ void Window::beginDraw() {
 void Window::endDraw() {
     impl->pRenderTarget->EndDraw();
 }
+
+void Window::loadImage(LPCWSTR fileName) {
+    ID2D1Bitmap* bitmap = nullptr;
+    IWICBitmapDecoder* decoder = nullptr;
+    IWICBitmapFrameDecode* frame = nullptr;
+    IWICFormatConverter* converter = nullptr;
+
+    impl->wicFactory->CreateDecoderFromFilename(
+        fileName,
+        nullptr,
+        GENERIC_READ,
+        WICDecodeMetadataCacheOnLoad,
+        &decoder
+    );
+
+    decoder->GetFrame(0, &frame);
+
+    impl->wicFactory->CreateFormatConverter(&converter);
+
+    converter->Initialize(
+        frame,
+        GUID_WICPixelFormat32bppPBGRA,
+        WICBitmapDitherTypeNone,
+        nullptr,
+        0.0,
+        WICBitmapPaletteTypeCustom
+    );
+
+    // get frame + convert to 32bppPBGRA...
+
+    impl->pRenderTarget->CreateBitmapFromWicBitmap(
+        converter,
+        nullptr,
+        &bitmap
+    );
+
+    impl->pRenderTarget->DrawBitmap(bitmap);
+
+    bitmap->Release();
+    converter->Release();
+    frame->Release();
+    decoder->Release();
+}

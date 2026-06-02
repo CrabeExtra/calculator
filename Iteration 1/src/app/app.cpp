@@ -17,7 +17,7 @@ void App::run() {
 
     window.showWindow(); // show the window (duh)
 
-    display.buildCalculatorLayout(); // build the layout of the calculator (will draw this later during render loop)
+    rootGrids.push_back(display.buildCalculatorLayout()); // build the layout of the calculator (will draw this later during render loop)
 
     window.messageLoop(); // accept input, translate input, handles any changes after showing the window.
 };
@@ -28,8 +28,11 @@ void App::render() {
 
     //window.roundedRectangle(0.5f, 0.5f, 100.5f, 100.5f, 10.0f, 10.0f, Theme::ButtonFillPrimary, Theme::ButtonBorderPrimary);
     try {
-        Log::info("Rendering grid...");
-        //display.drawGrid(rootGrids[activeGrid], window);
+        if(rootGrids.empty()) {
+            Log::warning("No root grids to render.");
+            return;
+        }
+        display.drawGrid(*rootGrids[activeGrid], window);
     } catch(const std::exception& e) {
         std::string msg = std::string("Exception: ") + e.what();
         Log::error(msg);
@@ -37,4 +40,12 @@ void App::render() {
     
     window.endDraw();
 
+}
+
+void App::onResize(float width, float height) {
+    // do something
+    //Log::info("Screen resized. New size: [" + std::to_string(width) + ", " + std::to_string(height) + "]");
+    // this will cause an error as is, I don't want to resize anyway for now.
+    // rootGrids[0].setWidth(std::to_string(width));
+    // rootGrids[0].setHeight(std::to_string(height));
 }

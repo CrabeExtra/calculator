@@ -14,19 +14,21 @@
  * can be implemented per OS and used to create the same APP.
  */
 class Window {
-    static constexpr int WINDOW_WIDTH = 360;
-    static constexpr int WINDOW_HEIGHT = 480;
-    static constexpr int X = CW_USEDEFAULT;
-    static constexpr int Y = CW_USEDEFAULT;
-
     public: 
+        static constexpr int WINDOW_WIDTH = 360;
+        static constexpr int WINDOW_HEIGHT = 480;
+        static constexpr int X = CW_USEDEFAULT;
+        static constexpr int Y = CW_USEDEFAULT;
         // core window initialisationa and loop. (might need to revisit these types when making OS agnostic - specifically when looking into Linux implementation)
-        Window(HINSTANCE hInstance, int nCmdShow, std::function<void()> render);
+        Window(HINSTANCE hInstance, int nCmdShow, std::function<void()> render, std::optional<std::function<void(float width, float height)>> onResize);
         static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
         LRESULT handleMessage(UINT msg, WPARAM wParam, LPARAM lParam);
         void createWindow();
         void showWindow();
         void messageLoop();
+        // window helpers
+        int viewWidth();
+        int viewHeight();
         // drawing functions
         uint32_t getColourInt();
         void rectangle(float left, float top, float right, float bottom, std::optional<uint32_t> background_color, std::optional<uint32_t> border_color);
@@ -34,11 +36,15 @@ class Window {
         void ellipse(float centerX, float centerY, float radiusX, float radiusY, std::optional<uint32_t> background_color, std::optional<uint32_t> border_color);
         void beginDraw();
         void endDraw();
+        void loadImage(LPCWSTR fileName);
+
 
     private:
         // This helps keep Windows/DirectX specific variables only visible to the win32 implementation
         // and any future Linux implementation only visible to the liux implementation. 
         struct Impl;
         Impl* impl;
+        struct Image;
+        std::vector<Image*> images;
         
 };
