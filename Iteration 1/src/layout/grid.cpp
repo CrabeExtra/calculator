@@ -55,54 +55,56 @@ float Grid::strToHeightPx(std::string str, std::optional<float> parentHeight) co
 }
 
 // TODO: think about overflow.
-void Grid::addElement(GridElement element) {
+void Grid::addCol(Grid* col) {
     
     // alter dimensions.
-    std::vector<float> pCoords = element.parent->getCoordinates();
-    std::vector<GridElement> elementsInThisRow = element.parent->getElements();
+    std::vector<float> coords = col->getCoordinates();
+    std::vector<float> absoluteCoords = col->getAbsoluteCoords();
+    std::vector<Grid*> elementsInThisContainer = col->parent->getElements();
+    std::vector<float> parentCoords = col->parent->getAbsoluteCoords();
 
-    float elemWidth = element.getWidth();
-    float elemHeight = element.getHeight();
+    float width = col->getWidthPx();
+    float height = col->getHeightPx();
 
-    if(elementsInThisRow.empty()) {
+    if(elementsInThisContainer.empty()) {
         // can set starting coords to same as parents.
-        element.dimensions[0] = pCoords[0] + element.dimensions[0];
-        element.dimensions[2] = element.dimensions[0] + elemWidth;
+        absoluteCoords[0] = coords[0] + parentCoords[0];
+        absoluteCoords[2] = coords[0] + width;
 
-        element.dimensions[1] = pCoords[1] + element.dimensions[1];
-        element.dimensions[3] = element.dimensions[1] + elemHeight;
+        absoluteCoords[1] = coords[1] + parentCoords[1];
+        absoluteCoords[3] = coords[1] + height;
     } else {
-        GridElement prevElem = elementsInThisRow[elementsInThisRow.size() - 1];
-        element.dimensions[0] = prevElem.dimensions[2] + element.dimensions[0];
-        element.dimensions[2] = element.dimensions[0] + elemWidth;
+        Grid* latestElement = elementsInThisContainer[elementsInThisContainer.size() - 1];
+        std::vector<float> latestElemCoords = latestElement->getAbsoluteCoords();
 
-        element.dimensions[1] = pCoords[1] + element.dimensions[1];
-        element.dimensions[3] = element.dimensions[1] + elemHeight;
+        absoluteCoords[0] = latestElemCoords[2] + coords[0];
+        absoluteCoords[2] = coords[0] + width;
+
+        absoluteCoords[1] = parentCoords[1] + coords[1];
+        absoluteCoords[3] = coords[1] + height;
     }
 
-    elements.push_back(element);
+    elementsInThisContainer.push_back(col);
 }
-// TODO: handle case where a row sits in an element rather than another row? should I give row an enum property that lets it be a column or a row? hmm. 
 
 void Grid::addRow(Grid* row) {
     std::vector<float> coords = row->getCoordinates();
-    std::vector<Grid*> rowsInThisContainer = row->parent->getRows();
-    std::vector<float> parentCoords = row->parent->getCoordinates();
+    std::vector<float> absoluteCoords = row->getAbsoluteCoords();
+    std::vector<Grid*> elementsInThisContainer = row->parent->getElements();
+    std::vector<float> parentCoords = row->parent->getAbsoluteCoords();
 
-    if(rowsInThisContainer.empty()) {
-        coords[0] = coords[0] + parentCoords[0];
-        coords[1] = coords[1] + parentCoords[1];
+    if(elementsInThisContainer.empty()) {
+        absoluteCoords[0] = coords[0] + parentCoords[0];
+        absoluteCoords[1] = coords[1] + parentCoords[1];
     } else {
-        Grid* latestRow = rowsInThisContainer[rowsInThisContainer.size() - 1];
-        std::vector<float> latestRowCoords = latestRow->getCoordinates();
+        Grid* latestElement = elementsInThisContainer[elementsInThisContainer.size() - 1];
+        std::vector<float> latestRowCoords = latestElement->getAbsoluteCoords();
 
-        float latestRowHeight = latestRow->getHeightPx();
+        float latestRowHeight = latestElement->getHeightPx();
 
-        coords[0] = coords[0] + latestRowCoords[0];
-        coords[1] = coords[1] + latestRowCoords[1] + latestRowHeight;
+        absoluteCoords[0] = coords[0] + latestRowCoords[0];
+        absoluteCoords[1] = coords[1] + latestRowCoords[1] + latestRowHeight;
     }   
-
-    row->setCoords(coords);
     
-    rows.push_back(row);
+    elementsInThisContainer.push_back(row);
 }
