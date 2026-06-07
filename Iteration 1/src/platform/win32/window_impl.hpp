@@ -25,4 +25,4 @@ struct Window::Impl {
 
 struct Window::Image {
     
-}
+};

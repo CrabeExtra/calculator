@@ -26,3 +26,6 @@ TODO:
 - later iterations
     - More complex calculator calculations, support for larger numbers, overflow handling, more complex numberical methods, brackets, orders etc.
     - add widget support, shortcuts and start menu access.
+    - I want to make rendering just once per requirement rather than each loop.
+        - I should add absolute locations to each grid object, that way I can have a generic re-render function that just re-renders the part of the page that needs re-rendering.
+    

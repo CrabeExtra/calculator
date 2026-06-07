@@ -3,7 +3,6 @@
 #include "app.hpp"
 #include "window.hpp"
 #include "window_impl.hpp"
-#include "theme.hpp"
 #include "log.hpp"
 
 
@@ -26,7 +25,6 @@ void App::render() {
     // this will be called during the render loop, and will be responsible for drawing the current page layout to the screen. 
     window.beginDraw();
 
-    //window.roundedRectangle(0.5f, 0.5f, 100.5f, 100.5f, 10.0f, 10.0f, Theme::ButtonFillPrimary, Theme::ButtonBorderPrimary);
     try {
         if(rootGrids.empty()) {
             Log::warning("No root grids to render.");
