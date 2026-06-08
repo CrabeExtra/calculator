@@ -11,9 +11,15 @@ class App {
         void render();
         void onResize(float width, float height);
 
+        std::string getDrawId() { return drawId; };
+        
+        void setDrawId(const std::string& drawId) { this->drawId = drawId; };
+
     private: 
         int activeGrid = 0;
         Window window;
         Display display;
-        std::vector<Grid*> rootGrids; // root grids vector, each root grid is essentially a page layout.
+        std::vector<std::unordered_map<std::string, Grid*>> rootGrids; // root grids vector, each root grid is essentially a page layout. I've added unordered map
+                                                                       // so that grids can be indexed by ID. Please not that the grid with ID "root" is always the root grid.
+        std::string drawId = "root";
 };

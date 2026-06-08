@@ -3,8 +3,10 @@
 
 #include "../window.hpp"
 #include "window_impl.hpp"
+#include "log.hpp"
 
 void Window::rectangle(float left, float top, float right, float bottom, std::optional<uint32_t> background_color, std::optional<uint32_t> border_color) {
+
     uint32_t originalColour = getColourInt(); 
 
     D2D1_RECT_F rect = D2D1::RectF(left, top, right, bottom);

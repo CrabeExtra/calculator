@@ -12,7 +12,7 @@
 class Display
 {
     public:
-        Grid* buildCalculatorLayout();
+        void buildCalculatorLayout(std::vector<std::unordered_map<std::string, Grid*>>& rootGrids);
         void drawGrid(const Grid& grid, Window& window);
 
     private:

@@ -43,7 +43,7 @@ void Window::createWindow() {
         Y, // Y
         WINDOW_WIDTH, // Width
         WINDOW_HEIGHT, // Height
-        NULL,       // Parent window    
+        NULL,       // Container window    
         NULL,       // Menu
         impl->hInstance,  // Instance handle
         this        // Additional application data (just injecting window context)
@@ -103,6 +103,10 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                     &window->impl->pRenderTarget
                 );
 
+                window->impl->pRenderTarget->Resize(D2D1::SizeU(width, height));
+                InvalidateRect(hwnd, nullptr, TRUE);
+                UpdateWindow(hwnd);
+
                 // initialise brush.
                 window->impl->pRenderTarget->CreateSolidColorBrush(
                     D2D1::ColorF(0xFFFFFF),
@@ -113,6 +117,15 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                 CoInitialize(nullptr);  
                 window->impl->wicFactory = nullptr;
                 
+                // initialise writer
+                IDWriteFactory* pDWriteFactory = nullptr;
+
+                DWriteCreateFactory(
+                    DWRITE_FACTORY_TYPE_SHARED,
+                    __uuidof(IDWriteFactory),
+                    reinterpret_cast<IUnknown**>(&pDWriteFactory)
+                );
+
                 // TODO: handle if hr is error response 
 
                 return TRUE;
@@ -125,6 +138,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                 if(window) {
                     window->impl->render();
                 }
+                return 0;
             }
         case WM_SIZE:
         {

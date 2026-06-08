@@ -28,4 +28,5 @@ TODO:
     - add widget support, shortcuts and start menu access.
     - I want to make rendering just once per requirement rather than each loop.
         - I should add absolute locations to each grid object, that way I can have a generic re-render function that just re-renders the part of the page that needs re-rendering.
+    - on-hover seems like an expensive operation. Check this later.
     

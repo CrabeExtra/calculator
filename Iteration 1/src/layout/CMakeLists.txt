@@ -5,6 +5,7 @@ add_library(layout
 
 target_link_libraries(layout
     log
+    platform
 )
 
 target_include_directories(layout PUBLIC
