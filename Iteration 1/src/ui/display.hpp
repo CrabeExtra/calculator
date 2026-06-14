@@ -14,6 +14,9 @@ class Display
     public:
         void buildCalculatorLayout(std::vector<std::unordered_map<std::string, Grid*>>& rootGrids);
         void drawGrid(const Grid& grid, Window& window);
+        void Display::buildCalculatorGui(Grid* rootGrid, std::unordered_map<std::string, Grid *>& map);
+        void Display::buildCalculatorScreen(Grid* rootGrid, std::unordered_map<std::string, Grid *>& map);
+        void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::string, Grid *>& map);
 
     private:
         std::string currentText;

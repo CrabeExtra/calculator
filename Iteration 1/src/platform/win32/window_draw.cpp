@@ -85,6 +85,52 @@ void Window::endDraw() {
     impl->pRenderTarget->EndDraw();
 }
 
+std::wstring utf8ToWide(const std::string& str)
+{
+    if (str.empty())
+        return {};
+
+    int size = MultiByteToWideChar(
+        CP_UTF8,
+        0,
+        str.c_str(),
+        -1,
+        nullptr,
+        0
+    );
+
+    std::wstring result(size - 1, L'\0');
+
+    MultiByteToWideChar(
+        CP_UTF8,
+        0,
+        str.c_str(),
+        -1,
+        result.data(),
+        size
+    );
+
+    return result;
+}
+
+// TODO: handle fonts, varaible text alignment. Container overflow.
+void Window::text(float left, float top, float right, float bottom, std::string text) {
+    auto wideText = utf8ToWide(text);
+
+    impl->pRenderTarget->DrawText(
+        wideText.c_str(),
+        static_cast<UINT32>(wideText.size()),
+        impl->pTextFormat,
+        D2D1::RectF(
+            left,
+            top,
+            right,
+            bottom
+        ),
+        impl->pBrush
+    );
+}
+
 void Window::loadImage(LPCWSTR fileName) {
     ID2D1Bitmap* bitmap = nullptr;
     IWICBitmapDecoder* decoder = nullptr;

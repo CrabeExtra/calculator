@@ -19,6 +19,7 @@ struct Window::Impl {
     ID2D1Factory* factory = nullptr;
     IDWriteFactory* pDWriteFactory;
     IWICImagingFactory* wicFactory = nullptr;
+    IDWriteTextFormat* pTextFormat = nullptr;
     std::function<void()> render = nullptr;
     std::function<void(float width, float height)> onResize;
     int height;

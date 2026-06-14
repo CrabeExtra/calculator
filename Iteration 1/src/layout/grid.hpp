@@ -38,8 +38,8 @@ class Grid {
             std::string width
             std::string height
             std::vector<float> coordinates
-            GridDirection gridDirection
             Grid* container
+            GridDirection gridDirection
             uint32_t background_color
             uint32_t border_color
             std::string text
@@ -79,6 +79,9 @@ class Grid {
             else {
                 // no container, set absolute coords to coords.
                 this->absoluteCoordinates = coordinates.value_or(std::vector<float> { 0.0f, 0.0f});
+                this->absoluteCoordinates.resize(4);
+                this->absoluteCoordinates[2] = this->absoluteCoordinates[0] + this->getWidthPx();
+                this->absoluteCoordinates[3] = this->absoluteCoordinates[1] + this->getHeightPx();
             }
         }
 

@@ -34,7 +34,7 @@ class Window {
         void rectangle(float left, float top, float right, float bottom, std::optional<uint32_t> background_color, std::optional<uint32_t> border_color);
         void roundedRectangle(float left, float top, float right, float bottom, float radiusX, float radiusY, std::optional<uint32_t> background_color, std::optional<uint32_t> border_color);
         void ellipse(float centerX, float centerY, float radiusX, float radiusY, std::optional<uint32_t> background_color, std::optional<uint32_t> border_color);
-        void text(std::string text); // TODO: further params here.
+        void text(float left, float top, float right, float bottom, std::string text);
         void beginDraw();
         void endDraw();
         void loadImage(LPCWSTR fileName);

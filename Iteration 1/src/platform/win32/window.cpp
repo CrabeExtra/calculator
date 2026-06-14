@@ -118,12 +118,21 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                 window->impl->wicFactory = nullptr;
                 
                 // initialise writer
-                IDWriteFactory* pDWriteFactory = nullptr;
-
                 DWriteCreateFactory(
                     DWRITE_FACTORY_TYPE_SHARED,
                     __uuidof(IDWriteFactory),
-                    reinterpret_cast<IUnknown**>(&pDWriteFactory)
+                    reinterpret_cast<IUnknown**>(&window->impl->pDWriteFactory)
+                );
+
+                window->impl->pDWriteFactory->CreateTextFormat(
+                    L"Segoe UI",
+                    nullptr,
+                    DWRITE_FONT_WEIGHT_NORMAL,
+                    DWRITE_FONT_STYLE_NORMAL,
+                    DWRITE_FONT_STRETCH_NORMAL,
+                    24.0f,
+                    L"en-us",
+                    &window->impl->pTextFormat
                 );
 
                 // TODO: handle if hr is error response 

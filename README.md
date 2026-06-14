@@ -29,4 +29,11 @@ TODO:
     - I want to make rendering just once per requirement rather than each loop.
         - I should add absolute locations to each grid object, that way I can have a generic re-render function that just re-renders the part of the page that needs re-rendering.
     - on-hover seems like an expensive operation. Check this later.
+        - Note: I've stored each grid in a map. All I need to do is re-render the hovered component.
+        - Calculating onhover is just a matter of checking the absolute positions of each grid and comparing with mouse location.
+        - I still have to search every single component to compare mouse positions. There has got to be a faster way of implementing this.
+        - I read online that a good way to search for components hovered is by segmenting the screen into cells each of which containes a list of components that intersect that given segment.
+        - I still feel like there's a much better way to do this.
+        - For now I will simply add an 'interacable field' that bubbles up from the interactable component, marking all containers as interactible so the system knows where to search for the cursor and where not to bother.
+            Then I'll just search by elements of each the root grid and recurse on the matching absolute coords in a tree-like search so the efficiency is O(Log(n)) rather than O(n). 
     

@@ -84,16 +84,16 @@ void Grid::addCol(Grid* col) {
         absoluteCoords[2] = coords[0] + width;
 
         absoluteCoords[1] = coords[1] + containerCoords[1];
-        absoluteCoords[3] = coords[1] + height;
+        absoluteCoords[3] = absoluteCoords[1] + height;
     } else {
         Grid* latestElement = elementsInThisContainer[elementsInThisContainer.size() - 1];
         const std::vector<float>& latestElemCoords = latestElement->getAbsoluteCoords();
 
         absoluteCoords[0] = latestElemCoords[2] + coords[0];
-        absoluteCoords[2] = coords[0] + width;
+        absoluteCoords[2] = absoluteCoords[0] + width;
 
         absoluteCoords[1] = containerCoords[1] + coords[1];
-        absoluteCoords[3] = coords[1] + height;
+        absoluteCoords[3] = absoluteCoords[1] + height;
     }
 
     elementsInThisContainer.push_back(col);
@@ -105,20 +105,29 @@ void Grid::addRow(Grid* row) {
 
     std::vector<float>& absoluteCoords = row->getAbsoluteCoords();
     std::vector<Grid*>& elementsInThisContainer = row->getContainer()->getElements();
+
+    float width = row->getWidthPx();
+    float height = row->getHeightPx();
     
     absoluteCoords.resize(4);
 
     if(elementsInThisContainer.empty()) {
         absoluteCoords[0] = coords[0] + containerCoords[0];
+        absoluteCoords[2] = absoluteCoords[0] + width;
+
         absoluteCoords[1] = coords[1] + containerCoords[1];
+        absoluteCoords[3] = absoluteCoords[1] + height;
     } else {
         Grid* latestElement = elementsInThisContainer[elementsInThisContainer.size() - 1];
         const std::vector<float>& latestRowCoords = latestElement->getAbsoluteCoords();
 
         float latestRowHeight = latestElement->getHeightPx();
 
-        absoluteCoords[0] = coords[0] + latestRowCoords[0];
-        absoluteCoords[1] = coords[1] + latestRowCoords[1] + latestRowHeight;
+        absoluteCoords[0] = coords[0] + containerCoords[0];
+        absoluteCoords[2] = absoluteCoords[0] + width;
+
+        absoluteCoords[1] = coords[1] + latestRowCoords[3];
+        absoluteCoords[3] = absoluteCoords[1] + height;
     }   
     
     elementsInThisContainer.push_back(row);

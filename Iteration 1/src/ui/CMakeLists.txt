@@ -1,6 +1,7 @@
 add_library(ui
     display.cpp
     inputHandler.cpp
+    calculatorGui.cpp
 )
 
 target_link_libraries(ui
