@@ -3,6 +3,7 @@
 #include <string>
 #include <optional>
 #include <vector>
+#include <functional>
 
 #include "theme.hpp"
 
@@ -102,11 +103,16 @@ class Grid {
         Grid* getContainer() const { return container; };
         float getWidthPx() const;
         float getHeightPx() const;
+        bool& getInteractable() { return this->interactable; };
 
         // setters (some thought with std::move versus const ref)
         void setWidth(const std::string& width) { this->width = width; }
         void setHeight(const std::string& height) { this->height = height; }
         void setAbsoluteCoords (const std::vector<float>& coordinates) { this->absoluteCoordinates = coordinates; };
+        void setInteractable(bool& interactable) { this->interactable = interactable; };
+        void setOnMouseOver(std::function<void(Grid*)> onMouseOver) { this->onMouseOver = std::move(onMouseOver); };
+        void setOnMouseOut(std::function<void(Grid*)> onMouseOut) { this->onMouseOut = std::move(onMouseOut); };
+        void setOnClick(std::function<void(Grid*)> onClick) { this->onClick = std::move(onClick); };
 
         // structural
         void addElement(Grid* elem);
@@ -116,6 +122,12 @@ class Grid {
         // helpers
         float strToWidthPx(std::string str, std::optional<float> containerWidth) const;
         float strToHeightPx(std::string str, std::optional<float> containerHeight) const;
+
+        // mouse events
+        
+        std::function<void(Grid*)> onMouseOver;
+        std::function<void(Grid*)> onMouseOut;
+        std::function<void(Grid*)> onClick;
 
     private:
         // for referencing - efficient rendering.
@@ -135,6 +147,9 @@ class Grid {
         float border_radius_height;
         BorderShape borderShape;
         GridDirection gridDirection;
+
+        // mouse events.
+        bool interactable;
 
         // structure
         Grid* container;

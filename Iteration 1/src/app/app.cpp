@@ -31,14 +31,14 @@ void App::render() {
 
         if(!getDrawId().empty()) {
 
-            if(activeGrid >= rootGrids.size()) {
+            if(activeGridIndex >= rootGrids.size()) {
                 Log::error("Attempting to access active grid out of bounds.");
-                Log::error("Active grid: " + std::to_string(activeGrid));
+                Log::error("Active grid: " + std::to_string(activeGridIndex));
                 Log::error("Maximum active grid: " + rootGrids.size());
                 throw std::exception("Rendering error. See logs.");
             }
 
-            auto& map = rootGrids[activeGrid]; // if this errors it will catch anyway.
+            auto& map = rootGrids[activeGridIndex]; // if this errors it will catch anyway.
             auto mapEntry = map.find(getDrawId());
 
             if(mapEntry == map.end()) {

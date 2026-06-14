@@ -5,9 +5,15 @@
 #include <functional>
 #include <wincodec.h>
 #include <dwrite.h>
+#include <queue>
 
 #include "../window.hpp"
 #include "app.hpp"
+
+struct MouseEvent {
+    int x;
+    int y;
+};
 
 
 struct Window::Impl {
@@ -22,8 +28,10 @@ struct Window::Impl {
     IDWriteTextFormat* pTextFormat = nullptr;
     std::function<void()> render = nullptr;
     std::function<void(float width, float height)> onResize;
+    std::function<void(int x, int y)> onMouseMove;
     int height;
     int width;
+    std::queue<MouseEvent> clickQueue;
 };
 
 struct Window::Image {

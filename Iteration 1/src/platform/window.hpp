@@ -9,6 +9,16 @@
 
 #include "Windows.h"
 
+enum class InputAction
+{
+    None,
+    Digit0, Digit1, Digit2, Digit3, Digit4,
+    Digit5, Digit6, Digit7, Digit8, Digit9,
+    Add, Subtract, Multiply, Divide,
+    Equals,
+    Clear
+};
+
 /**
  * Generic Window class. This is kept OS and rendering API agnostic. Just contains interface required for the grid system. These functions
  * can be implemented per OS and used to create the same APP.
@@ -20,7 +30,13 @@ class Window {
         static constexpr int X = CW_USEDEFAULT;
         static constexpr int Y = CW_USEDEFAULT;
         // core window initialisationa and loop. (might need to revisit these types when making OS agnostic - specifically when looking into Linux implementation)
-        Window(HINSTANCE hInstance, int nCmdShow, std::function<void()> render, std::optional<std::function<void(float width, float height)>> onResize);
+        Window(
+            HINSTANCE hInstance,
+            int nCmdShow, 
+            std::function<void()> render, 
+            std::optional<std::function<void(float width, float height)>> onResize,
+            std::optional<std::function<void(int x, int y)>> onMouseMove
+        );
         static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
         LRESULT handleMessage(UINT msg, WPARAM wParam, LPARAM lParam);
         void createWindow();
@@ -38,6 +54,7 @@ class Window {
         void beginDraw();
         void endDraw();
         void loadImage(LPCWSTR fileName);
+        InputAction handleKey(int vkCode);
 
 
     private:

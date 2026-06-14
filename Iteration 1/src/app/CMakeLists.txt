@@ -1,5 +1,6 @@
 add_library(app
     app.cpp
+    app_mouse.cpp
 )
 
 target_link_libraries(app

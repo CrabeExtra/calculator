@@ -1,6 +1,5 @@
 add_library(ui
     display.cpp
-    inputHandler.cpp
     calculatorGui.cpp
 )
 

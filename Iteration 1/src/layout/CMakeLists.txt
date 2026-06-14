@@ -1,5 +1,6 @@
 add_library(layout
     grid.cpp
+    grid_mouse.cpp
 )
 
 

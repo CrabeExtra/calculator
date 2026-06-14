@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <functional>
+#include <windowsx.h>
 #include "Windows.h"
 
 #include "../window.hpp"
@@ -9,12 +10,19 @@
 #include "window_impl.hpp"
 #include "app.hpp"
 
-Window::Window(HINSTANCE _hInstance, int _nCmdShow, std::function<void()> render, std::optional<std::function<void(float width, float height)>> onResize) {
+Window::Window(
+    HINSTANCE _hInstance, 
+    int _nCmdShow, 
+    std::function<void()> render, 
+    std::optional<std::function<void(float width, float height)>> onResize,
+    std::optional<std::function<void(int x, int y)>> onMouseMove
+) {
     impl = new Impl();
     impl->hInstance = _hInstance;
     impl->nCmdShow = _nCmdShow;
     impl->render = render;
     impl->onResize = *onResize;
+    impl->onMouseMove = *onMouseMove;
 }
 
 void Window::createWindow() {
@@ -175,6 +183,29 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             }
             
             return 0;
+        }
+        case WM_MOUSEMOVE: 
+        {
+
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onResize)
+                window->impl->onMouseMove(x, y);
+
+            return 0;
+        }
+        case WM_SETCURSOR:
+        {
+            if (LOWORD(lParam) == HTCLIENT)
+            {
+                SetCursor(LoadCursor(nullptr, IDC_ARROW));
+                return TRUE;
+            }
+            break;
         }
             return 0;
     }

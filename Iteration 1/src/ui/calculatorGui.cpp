@@ -6,6 +6,18 @@ void Display::buildCalculatorGui(Grid* rootGrid, std::unordered_map<std::string,
     buildCalculatorButtons(rootGrid, map);
 }
 
+void onHoverButton(Grid* self) {
+    // do something here. Then set on all the buttons.
+}
+
+void onClickButton(Grid* self) {
+
+}
+
+void onMouseOut(Grid* self) {
+
+}
+
 void Display:: buildCalculatorScreen(Grid* rootGrid, std::unordered_map<std::string, Grid *>& map) {
     Grid* displayRow = new Grid(
         "displayRow",
@@ -517,7 +529,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         GridDirection::Col,
         std::nullopt, // background colour
         0xFFFFFF, // border colour
-        "point", // text
+        ".", // text
         std::nullopt, // default borderShape (rectangle)
         std::nullopt, // border radius width
         std::nullopt  // border radius height
