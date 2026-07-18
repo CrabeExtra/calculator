@@ -13,20 +13,13 @@ void Display::buildCalculatorLayout(std::vector<std::unordered_map<std::string, 
     rootGrids.emplace_back(); // create an empty map at the first index.
     auto& map = rootGrids.back(); // get the reference to the map.
 
-    Grid* rootGrid = new Grid(
-        "root",
-        std::to_string(Window::WINDOW_WIDTH - 17),
-        std::to_string(Window::WINDOW_HEIGHT - 40.5),
-        std::nullopt,
-        nullptr,
-        std::nullopt,
-        Theme::Background, // background colour
-        Theme::Background, // border colour
-        "", // text
-        std::nullopt, // default borderShape (rectangle)
-        std::nullopt, // border radius width
-        std::nullopt  // border radius height
-    );
+    Grid* rootGrid = new Grid({
+        .id = "root",
+        .size = {
+            .width = std::to_string(Window::WINDOW_WIDTH - 17) + "px",
+            .height = std::to_string(Window::WINDOW_HEIGHT - 40.5) + "px"
+        }
+    });
 
     map.emplace(rootGrid->getId(), rootGrid); // add each of my new grids to the map. (or at least those we plan on re-rendering. I'm going to add all for now for the sake of simplicity.)
 

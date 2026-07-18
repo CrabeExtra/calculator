@@ -21,9 +21,10 @@ To run:
 
 TODO:
 - iteration 1
-    - linux support, unsure when I'll get to this, but I'm writing it so that it's kind of able to be ported.
     - Generic layout/grid system. Generic buttons etc. Button push tactility etc.
+    - completed calculator
 - later iterations
+    - linux support, unsure when I'll get to this, but I'm writing it so that it's kind of able to be ported.
     - More complex calculator calculations, support for larger numbers, overflow handling, more complex numberical methods, brackets, orders etc.
     - add widget support, shortcuts and start menu access.
     - I want to make rendering just once per requirement rather than each loop.

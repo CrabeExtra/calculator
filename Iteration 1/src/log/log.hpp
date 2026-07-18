@@ -26,4 +26,24 @@ class Log {
         }
 
         static void trimLogFile(const std::string& filename);
+
+    private:
+        static bool loggingEnabled() {
+            // check if logging is enabled. 
+            static bool enabled = readLoggingEnabledFromConfig();
+            return enabled;
+        }
+
+        // TODO: implement a class to handle config for efficiency.
+        bool readLoggingEnabledFromConfig() {
+            std::ifstream config("resources/logger_config.txt");
+            std::string line;
+            while (std::getline(config, line)) {
+                if (line == "enabled=true") {
+                    info("Logging is enabled.");
+                    return true;
+                }
+            }
+            return false;
+        }
 };

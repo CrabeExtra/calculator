@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Calculator)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(src)
 
@@ -16,4 +16,16 @@ target_link_libraries(CalculatorWin
     ui
     app
     layout
+)
+
+add_custom_command(TARGET CalculatorWin POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/resources
+    $<TARGET_FILE_DIR:CalculatorWin>/resources
+)
+
+add_custom_command(TARGET CalculatorWin POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets
+    $<TARGET_FILE_DIR:CalculatorWin>/assets
 )

@@ -57,16 +57,16 @@ void App::onMouseMove(int x, int y) {
     // this will need recreating for the case where wa want to add bubbling up to onhover.
 
     // mouse has left wherever else it may have been pointing.
-    if(!hoverId.empty()) {
-        Grid* previouslyHoveredGrid = map[hoverId];
+    // if(!hoverId.empty()) {
+    //     Grid* previouslyHoveredGrid = map[hoverId];
 
-        if(previouslyHoveredGrid->onMouseOut)
-            previouslyHoveredGrid->onMouseOut();
-    }
+    //     if(previouslyHoveredGrid->onMouseOut)
+    //         previouslyHoveredGrid->onMouseOut();
+    // }
 
-    // act on currently hovered.
+    // // act on currently hovered.
     
-    hoverId = currentGrid->getId();
-    if(currentGrid->onMouseOver)
-        currentGrid->onMouseOver();
+    // hoverId = currentGrid->getId();
+    // if(currentGrid->onMouseOver)
+    //     currentGrid->onMouseOver();
 }

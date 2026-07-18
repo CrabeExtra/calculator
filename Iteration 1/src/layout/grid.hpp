@@ -6,19 +6,20 @@
 #include <functional>
 
 #include "theme.hpp"
+#include "grid_config.hpp"
 
-enum class BorderShape {
-    Rectangle,
-    RoundedRectangle,
-    Ellipse,
-    Circle
-};
-
-enum class GridDirection {
-    Row,
-    Col
-};
-
+// forward defining this because it exists within the config struct.
+/**
+ * A grid element for layout management.
+ * Parameter is of type GridConfig:
+ * 
+ * std::string id = "";
+ * std::vector<float> coordinates = std::vector<float> { 0.0f, 0.0f};
+ * GridSize size{};
+ * GridStyle style{};
+ * Grid* container = nullptr;
+ * 
+ */
 class Grid {
     public:
         /**
@@ -33,53 +34,26 @@ class Grid {
          * functions specific to OS, like rendering, will be implemented in the OS specific code, and called from the grid class to prevent reliance on windows or linux etc.
          */
 
-        /**
-         * Params (all std::optional except container):
-         * std::string id
-            std::string width
-            std::string height
-            std::vector<float> coordinates
-            Grid* container
-            GridDirection gridDirection
-            uint32_t background_color
-            uint32_t border_color
-            std::string text
-            BorderShape borderShape
-            float border_radius_width
-            float border_radius_height
-         */
         Grid(
-            std::optional<std::string> id = std::nullopt,
-            std::optional<std::string> width = std::nullopt,
-            std::optional<std::string> height = std::nullopt,
-            std::optional<std::vector<float>> coordinates = std::nullopt,
-            Grid* container = nullptr,
-            std::optional<GridDirection> gridDirection = std::nullopt,
-            std::optional<uint32_t> background_color = std::nullopt, // TODO: create specific structs for the styling, positioning, etc.
-            std::optional<uint32_t> border_color = std::nullopt,
-            std::optional<std::string> text = std::nullopt,
-            std::optional<BorderShape> borderShape = std::nullopt,
-            std::optional<float> border_radius_width = std::nullopt,
-            std::optional<float> border_radius_height = std::nullopt
+            GridConfig config
         ) : 
-            id(id.value_or("")),
-            width(width.value_or("100%")),
-            height(height.value_or("100%")),
-            coordinates(coordinates.value_or(std::vector<float> { 0.0f, 0.0f})),
-            container(container),
-            gridDirection(gridDirection.value_or(GridDirection::Row)),
-            background_color(background_color),
-            border_color(border_color),
-            text(text.value_or("")),
-            borderShape(borderShape.value_or(BorderShape::Rectangle)),
-            border_radius_width(border_radius_width.value_or(NULL)),
-            border_radius_height(border_radius_height.value_or(NULL))
+            id(config.id),
+            width(config.size.width),
+            height(config.size.height),
+            container(config.container),
+            gridDirection(config.style.gridDirection),
+            background_color(config.style.background_color),
+            border_color(config.style.border_color),
+            text(config.style.text),
+            borderShape(config.style.borderShape),
+            border_radius_width(config.style.border_radius_width),
+            border_radius_height(config.style.border_radius_height)
         {
             if(container)
                 container->addElement(this); // just prevents having to add explicitly
             else {
                 // no container, set absolute coords to coords.
-                this->absoluteCoordinates = coordinates.value_or(std::vector<float> { 0.0f, 0.0f});
+                this->absoluteCoordinates = config.coordinates;
                 this->absoluteCoordinates.resize(4);
                 this->absoluteCoordinates[2] = this->absoluteCoordinates[0] + this->getWidthPx();
                 this->absoluteCoordinates[3] = this->absoluteCoordinates[1] + this->getHeightPx();
