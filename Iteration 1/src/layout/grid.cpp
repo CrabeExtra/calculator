@@ -55,7 +55,6 @@ float Grid::strToHeightPx(std::string str, std::optional<float> containerHeight)
 }
 
 void Grid::addElement(Grid* elem) {
-
     switch(elem->getGridDirection()) {
         case GridDirection::Row:
             return addRow(elem);
@@ -102,7 +101,7 @@ void Grid::addCol(Grid* col) {
 void Grid::addRow(Grid* row) {
     const std::vector<float>& coords = row->getCoordinates();
     const std::vector<float>& containerCoords = row->getContainer()->getAbsoluteCoords();
-
+    
     std::vector<float>& absoluteCoords = row->getAbsoluteCoords();
     std::vector<Grid*>& elementsInThisContainer = row->getContainer()->getElements();
 

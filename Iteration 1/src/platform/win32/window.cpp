@@ -148,13 +148,18 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
                 return TRUE;
             }
         case WM_PAINT:
-            {
+            {   
+                PAINTSTRUCT ps;
+                BeginPaint(hwnd, &ps);
+                
                 Window* window =
                     (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
                 
                 if(window) {
                     window->impl->render();
                 }
+                
+                EndPaint(hwnd, &ps);
                 return 0;
             }
         case WM_SIZE:
@@ -193,7 +198,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-            if(window->impl->onResize)
+            if(window->impl->onMouseMove)
                 window->impl->onMouseMove(x, y);
 
             return 0;

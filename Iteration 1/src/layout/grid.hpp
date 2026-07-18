@@ -41,6 +41,7 @@ class Grid {
             width(config.size.width),
             height(config.size.height),
             container(config.container),
+            coordinates(config.coordinates),
             gridDirection(config.style.gridDirection),
             background_color(config.style.background_color),
             border_color(config.style.border_color),

@@ -25,19 +25,23 @@ void onClickButton(Grid* self) {
 
 
 void Display:: buildCalculatorScreen(Grid* rootGrid, std::unordered_map<std::string, Grid *>& map) {
+    
     // Create the grid component.
     Grid* displayRow = new Grid({
         .id = "displayRow",
         .size = { .width = "100%", .height = "110px" },
         .container = rootGrid,
     });
-
+    
     // Place it in the map
     map.emplace(displayRow->getId(), displayRow);
-
+    
     Grid* displayRowLeftSpacing = new Grid({
         .id = "displayRowLeftSpacing",
         .size = { .width = "25%", .height = "100%" },
+        .style = {
+            .gridDirection = GridDirection::Col
+        },
         .container = displayRow,
     });
 
@@ -106,6 +110,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "%",
         },
@@ -119,6 +124,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "C",
         },
@@ -132,6 +138,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "DEL",
         },
@@ -145,6 +152,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "÷",
         },
@@ -167,6 +175,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "7",
         },
@@ -180,6 +189,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "8",
         },
@@ -193,6 +203,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "9",
         },
@@ -206,6 +217,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "x",
         },
@@ -228,6 +240,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "4",
         },
@@ -241,6 +254,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "5",
         },
@@ -254,6 +268,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "6",
         },
@@ -267,6 +282,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "-",
         },
@@ -289,6 +305,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "1",
         },
@@ -302,6 +319,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "2",
         },
@@ -315,6 +333,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "3",
         },
@@ -328,6 +347,7 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
         .style = {
+            .gridDirection = GridDirection::Col,
             .border_color = 0xFFFFFF,
             .text = "+",
         },
@@ -349,6 +369,9 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .id = "spacer",
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
+        .style = {
+            .gridDirection = GridDirection::Col
+        },
         .container = buttonRow5
     });
 
@@ -358,6 +381,9 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .id = "zero",
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
+        .style = {
+            .gridDirection = GridDirection::Col
+        },
         .container = buttonRow5
     });
 
@@ -367,6 +393,9 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .id = "point",
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
+        .style = {
+            .gridDirection = GridDirection::Col
+        },
         .container = buttonRow5
     });
 
@@ -376,6 +405,9 @@ void Display::buildCalculatorButtons(Grid* rootGrid, std::unordered_map<std::str
         .id = "equals",
         .coordinates = { buttonSpacing, 0.0f },
         .size = { .width = std::to_string(buttonWidth) + "px", .height = std::to_string(buttonHeight) + "px" },
+        .style = {
+            .gridDirection = GridDirection::Col
+        },
         .container = buttonRow5
     });
 

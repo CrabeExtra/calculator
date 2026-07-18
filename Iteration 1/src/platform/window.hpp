@@ -54,6 +54,7 @@ class Window {
         void beginDraw();
         void endDraw();
         void loadImage(LPCWSTR fileName);
+        void invalidateDraw();
         InputAction handleKey(int vkCode);
 
 

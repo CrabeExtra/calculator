@@ -13,22 +13,25 @@ void App::run() {
     window.createWindow(); // create the window (duh)
 
     window.showWindow(); // show the window (duh)
-    
+
     display.buildCalculatorLayout(rootGrids); // build the layout of the calculator (will draw this later during render loop)
-    
+
+    window.invalidateDraw(); // tell window 'building is finished, trigger a render'
+
     window.messageLoop(); // accept input, translate input, handles any changes after showing the window.
 };
 
 void App::render() {
     // this will be called during the render loop, and will be responsible for drawing the current page layout to the screen. 
     window.beginDraw();
-
+    
     try {
         if(rootGrids.empty()) {
+            Log::warning(std::to_string(rootGrids.size()) + " root grids built.");
             Log::warning("No root grids to render.");
             throw std::exception("Rendering error. See logs.");
         }
-
+        
         if(!getDrawId().empty()) {
 
             if(activeGridIndex >= rootGrids.size()) {

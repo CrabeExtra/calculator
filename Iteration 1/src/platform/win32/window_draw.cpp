@@ -173,3 +173,7 @@ void Window::loadImage(LPCWSTR fileName) {
     frame->Release();
     decoder->Release();
 }
+
+void Window::invalidateDraw() {
+    InvalidateRect(impl->hwnd, nullptr, FALSE);
+}
