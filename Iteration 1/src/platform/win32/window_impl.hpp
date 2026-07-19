@@ -29,6 +29,14 @@ struct Window::Impl {
     std::function<void()> render = nullptr;
     std::function<void(float width, float height)> onResize;
     std::function<void(int x, int y)> onMouseMove;
+    std::function<void(int x, int y)> onLMouseDown;
+    std::function<void(int x, int y)> onLMouseUp;
+    std::function<void(int x, int y)> onMMouseDown;
+    std::function<void(int x, int y)> onMMouseUp;
+    std::function<void(int x, int y)> onRMouseDown;
+    std::function<void(int x, int y)> onRMouseUp;
+    std::function<void(Key k)> onKeyDown;
+    std::function<void(Key k)> onKeyUp;
     int height;
     int width;
     std::queue<MouseEvent> clickQueue;

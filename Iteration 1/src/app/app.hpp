@@ -7,12 +7,20 @@
 class App {
     public: 
         App(HINSTANCE hInstance, int nCmdShow) : 
-            window(
+            window( // TODO: I'm sure there's a better place/pattern to hardcode these 
                 hInstance, 
                 nCmdShow, 
                 [this]() { this->render(); }, 
                 [this](float width, float height) { this->onResize(width, height); }, 
-                [this](int x, int y) { this->onMouseMove(x, y); }
+                [this](int x, int y) { this->onMouseMove(x, y); },
+                [this](int x, int y) { this->onLMouseDown(x, y); },
+                [this](int x, int y) { this->onLMouseUp(x, y); },
+                [this](int x, int y) { this->onMMouseDown(x, y); },
+                [this](int x, int y) { this->onMMouseUp(x, y); },
+                [this](int x, int y) { this->onRMouseDown(x, y); },
+                [this](int x, int y) { this->onRMouseUp(x, y); },
+                [this](Key k) { this-> onKeyDown(k); },
+                [this](Key k) { this-> onKeyUp(k); }
             ), 
             display(), 
             rootGrids() 
@@ -21,6 +29,20 @@ class App {
         void render();
         void onResize(float width, float height);
         void onMouseMove(int x, int y);
+        void onLMouseDown(int x, int y);
+        void onLMouseUp(int x, int y);
+        void onMMouseDown(int x, int y);
+        void onMMouseUp(int x, int y);
+        void onRMouseDown(int x, int y);
+        void onRMouseUp(int x, int y);
+        void onKeyDown(Key k);
+        void onKeyUp(Key k);
+
+        /// @brief What is the mouse currently hovering.
+        /// @param x 
+        /// @param y 
+        /// @return 
+        Grid* getMouseOver(int x, int y);
 
         std::string getDrawId() { return drawId; };
         

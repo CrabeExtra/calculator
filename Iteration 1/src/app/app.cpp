@@ -60,7 +60,7 @@ void App::render() {
             
             display.drawGrid(*g, window); // draw the grid.
 
-            setDrawId(""); // Once drawn, set the draw ID to empty to prevent unnecessary re-renders.
+            setDrawId(""); // Once drawn, set the draw ID to empty to safeguard unnecessary re-renders.
         }
 
         

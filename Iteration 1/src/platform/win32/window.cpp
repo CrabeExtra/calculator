@@ -7,15 +7,25 @@
 
 #include "../window.hpp"
 #include "../theme.hpp"
+#include "../key.hpp"
 #include "window_impl.hpp"
 #include "app.hpp"
+#include "./win_key_converter.cpp"
 
 Window::Window(
     HINSTANCE _hInstance, 
     int _nCmdShow, 
     std::function<void()> render, 
     std::optional<std::function<void(float width, float height)>> onResize,
-    std::optional<std::function<void(int x, int y)>> onMouseMove
+    std::optional<std::function<void(int x, int y)>> onMouseMove,
+    std::optional<std::function<void(int x, int y)>> onLMouseDown,
+    std::optional<std::function<void(int x, int y)>> onLMouseUp,
+    std::optional<std::function<void(int x, int y)>> onMMouseDown,
+    std::optional<std::function<void(int x, int y)>> onMMouseUp,
+    std::optional<std::function<void(int x, int y)>> onRMouseDown,
+    std::optional<std::function<void(int x, int y)>> onRMouseUp,
+    std::optional<std::function<void(Key k)>> onKeyDown,
+    std::optional<std::function<void(Key k)>> onKeyUp
 ) {
     impl = new Impl();
     impl->hInstance = _hInstance;
@@ -23,6 +33,15 @@ Window::Window(
     impl->render = render;
     impl->onResize = *onResize;
     impl->onMouseMove = *onMouseMove;
+    impl->onLMouseDown = *onLMouseDown;
+    impl->onLMouseUp = *onLMouseUp;
+    impl->onMMouseDown = *onMMouseDown;
+    impl->onMMouseUp = *onMMouseUp;
+    impl->onRMouseDown = *onRMouseDown;
+    impl->onRMouseUp = *onRMouseUp;
+    impl->onKeyDown = *onKeyDown;
+    impl->onKeyUp = *onKeyUp;
+    
 }
 
 void Window::createWindow() {
@@ -200,6 +219,64 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 
             if(window->impl->onMouseMove)
                 window->impl->onMouseMove(x, y);
+
+            return 0;
+        }
+        case WM_LBUTTONDOWN: {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onLMouseDown)
+                window->impl->onLMouseDown(x, y);
+
+            return 0;
+        }
+        case WM_RBUTTONDOWN: {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onRMouseDown)
+                window->impl->onRMouseDown(x, y);
+
+            return 0;
+        }
+        case WM_MBUTTONDOWN: {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onMMouseDown)
+                window->impl->onMMouseDown(x, y);
+
+            return 0;
+        }
+        case WM_KEYDOWN: {
+            Key key = convertKey(wParam, lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onKeyDown)
+                window->impl->onKeyDown(key);
+
+            return 0;
+        }
+        case WM_KEYUP: {
+            Key key = convertKey(wParam, lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onKeyUp)
+                window->impl->onKeyUp(key);
 
             return 0;
         }

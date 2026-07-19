@@ -8,6 +8,7 @@
 #include <d2d1helper.h>
 
 #include "Windows.h"
+#include "key.hpp"
 
 enum class InputAction
 {
@@ -35,7 +36,15 @@ class Window {
             int nCmdShow, 
             std::function<void()> render, 
             std::optional<std::function<void(float width, float height)>> onResize,
-            std::optional<std::function<void(int x, int y)>> onMouseMove
+            std::optional<std::function<void(int x, int y)>> onMouseMove,
+            std::optional<std::function<void(int x, int y)>> onLMouseDown,
+            std::optional<std::function<void(int x, int y)>> onLMouseUp,
+            std::optional<std::function<void(int x, int y)>> onMMouseDown,
+            std::optional<std::function<void(int x, int y)>> onMMouseUp,
+            std::optional<std::function<void(int x, int y)>> onRMouseDown,
+            std::optional<std::function<void(int x, int y)>> onRMouseUp,
+            std::optional<std::function<void(Key k)>> onKeyDown,
+            std::optional<std::function<void(Key k)>> onKeyUp
         );
         static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
         LRESULT handleMessage(UINT msg, WPARAM wParam, LPARAM lParam);
