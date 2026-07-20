@@ -26,9 +26,9 @@ double modulus(double a, double b) {
     return std::fmod(a, b);
 }
 
-bool isCharOperator(char c) { return c == '+' || c == '-' || c == '÷' || c == 'x' || c == '%'; }
+bool isCharOperator(char c) { return c == '+' || c == '-' || c == '÷' || c == 'x' || c == '%' || c == '/'; }
 
-bool isStrOperator(std::string str) { return str.size() == 1 && isCharOperator(str[0]); }
+bool isStrOperator(std::string str) { return str.size() == 1 && (isCharOperator(str[0]) || str == "÷"); }
 
 double Calculator::operate(double a, double b, char op) {
     switch(op) {
@@ -53,17 +53,39 @@ double Calculator::operate(double a, double b, char op) {
     }
 }
 
+// should really create a well documented library for stuff like this.
+
 bool contains(std::vector<char>& cv, char value) {
     return std::find(cv.begin(), cv.end(), value) != cv.end();
 }
 
+bool strContains(std::string& str, char value) {
+    return str.find(value) != std::string::npos;
+}
+
+bool strContainsSubStr(std::string& str, std::string& substr) {
+    return str.find(substr) != std::string::npos;
+}
+
 // TODO: need to handle overflow, will also need to handle larger numbers later on.
+//  TODO 2: this is inefficient. Fine for the scope of the project though. it's like O(3n). I can simplify a few things by starting at the 
+//          end of the currentDisplay string and iterating backwards, pushing the terms and ops in reverse order. Then consuming them by 
+//          popping the last value from the array as each next consecutive operator.
+//          This prevents the inefficient shuffling by the std::erase method. There's a few more things I could do, but ultimately there is really
+//          not much data crunching here so it doesn't matter that much. 
 // This function is super inefficient, not a big deal because the display is pretty small. but still.
 void Calculator::calculate(std::string& currentDisplay) {
     std::vector<char> ops;
     std::vector<double> terms;
 
     std::string currentTerm = "";
+
+    std::string divisionSymbol = "÷";
+
+    while(strContainsSubStr(currentDisplay, divisionSymbol)) {
+        size_t i = currentDisplay.find(divisionSymbol);
+        currentDisplay.replace(i, divisionSymbol.length(), "/");
+    }
 
     // break our input into terms and operators.
     for(int i = 0; i < (int)currentDisplay.length(); i++) {
@@ -73,7 +95,7 @@ void Calculator::calculate(std::string& currentDisplay) {
                 currentTerm = "";
             }
 
-            ops.push_back(currentDisplay[i] == '÷' ? '/' : currentDisplay[i]);
+            ops.push_back(currentDisplay[i]);
             continue;
         }
         
@@ -110,7 +132,7 @@ void Calculator::calculate(std::string& currentDisplay) {
 
     std::string toReturn = std::to_string(std::trunc(terms[0]*100)/100);
 
-    while(toReturn[(int)toReturn.length() - 1] == '0' || toReturn[(int)toReturn.length() - 1] == '.' ) {
+    while(strContains(toReturn, '.') && (toReturn[(int)toReturn.length() - 1] == '0' || toReturn[(int)toReturn.length() - 1] == '.')) {
         toReturn.pop_back();
     }
 
@@ -140,15 +162,21 @@ void Calculator::handleInput(std::string& input, std::string& currentDisplay) {
     else if(input == ".") {
         std::string currentTerm = "";
 
-        for(int i = static_cast<int>(currentDisplay.length()) - 1; i >= 0; i--) {
+        for(int i = (int)currentDisplay.length() - 1; i >= 0; i--) {
             if(isCharOperator(currentDisplay[i])) {
+                break;
+            }
+
+            // handle multi byte ÷ symbol:
+            std::string divSym = currentDisplay.substr(i, 2);
+            if(divSym == "÷") {
                 break;
             }
             
             currentTerm = currentTerm + currentDisplay[i];
         }
 
-        if(currentTerm.find(".") == std::string::npos && (int)currentTerm.length() > 0) {
+        if(!strContains(currentTerm, '.') && (int)currentTerm.length() > 0) {
             currentDisplay += ".";
         }
     }
