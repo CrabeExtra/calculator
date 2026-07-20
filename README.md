@@ -20,8 +20,13 @@ cmake --build .
 --build . compiles and builds (obviously run from the build directory).
 To run: 
 
-1. Find the Debug directory
+1. After running the build -> Find the Debug directory
 2. double click on the Calculator.exe
+
+Known issues: 
+- Don't calculate with an operatoras the final symbol, I don't have an error guard here, it'll just crash.
+    Pretty easy to repair, but not a big issue for a prototype.
+- Currently I've hacked the display to just error if the width of the characters exceeds the width of the screen. This method introduces an error as the % symbol is double the width, resulting in the user being able to cause some overflowed symbols to be burnt into the spacer row below the display. Really I should just truncate the display itself rather than the entire variable. This would also solve the 2 decimal place issue which caps accuracy as well as the display issue.
 
 TODO:
 - iteration 1
