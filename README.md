@@ -8,13 +8,16 @@ applications directly using the Windows API, and more familiar with WinUI, Win32
 An alterior intention of this task is to build up more reusable code for me to be able to more quickly build
 other Windows native programs in.
 
-To build:
-cd "./Iteration #"
+To build (honestly this is mostly just so when I don't use cmake for a while I don't immediately have to relearn it, but with the added benefit of giving noobs the opportunity to run this code):
+cd "./Iteration #" 
 cmake -S . -B build 
 cd "./build"
 cmake ..
 cmake --build .
 
+-S just specifies the source, -B specifies the build output folder.
+.. copies the cmakelists configs and stuff.
+--build . compiles and builds (obviously run from the build directory).
 To run: 
 
 1. Find the Debug directory
