@@ -18,10 +18,10 @@ bool isValidElement(Grid* element, int x, int y) {
 
 Grid* App::getMouseOver(int x, int y) {
     // just assuming these already exist. Note on floating "root" text here.
-    std::unordered_map<std::string, Grid *> map = rootGrids[activeGridIndex];
+    std::unordered_map<std::string, Grid *>& map = rootGrids[activeGridIndex];
     Grid* g = map["root"]; // TODO: what to do with the floating "root".
 
-     // check validity of the root element. if unnecessary to check, don't begin iterating.
+    // check validity of the root element. if unnecessary to check, don't begin iterating.
     if(!isValidElement(g, x, y)) {
         return nullptr;
     }
@@ -51,39 +51,52 @@ Grid* App::getMouseOver(int x, int y) {
     }
 }   
 
-/**
- * Function to check for hits.
- * Re
- */
+/// @brief On mouse move. On mouse move the currently hovered element will have its onMouseOver function called. While the previously hovered component (if no longer hovered) will have its onMouseOut function called.
+/// @param x 
+/// @param y 
 void App::onMouseMove(int x, int y) {
-
+    
     Grid* cursorGrid = getMouseOver(x, y);
 
-    Log::info(cursorGrid->getId());
-    // this will need recreating for the case where wa want to add bubbling up to onhover.
+    if(!cursorGrid) return;
 
-    // // mouse has left wherever else it may have been pointing.
-    // if(!hoverId.empty()) {
-    //     Grid* previouslyHoveredGrid = map[hoverId];
-
-    //     if(previouslyHoveredGrid->onMouseOut)
-    //         previouslyHoveredGrid->onMouseOut();
-    // }
-
-    // // act on currently hovered.
-    
-    // hoverId = currentGrid->getId();
-    // if(currentGrid->onMouseOver)
-    //     currentGrid->onMouseOver();
+    std::string currentId = cursorGrid->getId();
+    if(currentId != getHoverId()) {
+        Grid* unHoveredGrid = rootGrids[activeGridIndex][getHoverId()];
+        if(unHoveredGrid && unHoveredGrid->onMouseOut) {
+            unHoveredGrid->onMouseOut();
+        }
+            
+        if(cursorGrid && cursorGrid->onMouseOver) {
+            cursorGrid->onMouseOver();
+        }
+            
+        setHoverId(currentId);
+    } 
 }
 
 void App::onLMouseDown(int x, int y) {
+    Grid* cursorGrid = getMouseOver(x, y);
 
+    if(!cursorGrid) return;
+
+    setMouseDownId(cursorGrid->getId());
 }
 
 void App::onLMouseUp(int x, int y) {
+    Grid* cursorGrid = getMouseOver(x, y);
 
+    if(!cursorGrid) return;
+
+    if(getMouseDownId() == cursorGrid->getId()) {
+        if(cursorGrid->onClick)
+            cursorGrid->onClick();
+    }
 }
+
+/// @brief Below are just boilerplate.
+
+
 
 void App::onMMouseDown(int x, int y) {
 
@@ -100,8 +113,3 @@ void App::onRMouseDown(int x, int y) {
 void App::onRMouseUp(int x, int y) {
 
 }
-
-
-
-
-

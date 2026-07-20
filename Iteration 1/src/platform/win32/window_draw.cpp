@@ -174,6 +174,6 @@ void Window::loadImage(LPCWSTR fileName) {
     decoder->Release();
 }
 
-void Window::invalidateDraw() {
-    InvalidateRect(impl->hwnd, nullptr, FALSE);
+void Window::invalidateDraw(const RECT* rect) {
+    InvalidateRect(impl->hwnd, rect, FALSE);
 }

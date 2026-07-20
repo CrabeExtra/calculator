@@ -9,7 +9,7 @@
 /**
  * Builds the layout of the calculator. Keep in mind that duplicate ID fields will result in missing IDs in the map and therefore no re-renders.
  */
-void Display::buildCalculatorLayout(std::vector<std::unordered_map<std::string, Grid*>>& rootGrids) {
+void Display::buildCalculatorLayout(std::vector<std::unordered_map<std::string, Grid*>>& rootGrids, Window& window, Calculator calc) { // (calc is short for calculator, just using slang.)
     
     rootGrids.emplace_back(); // create an empty map at the first index.
 
@@ -25,14 +25,13 @@ void Display::buildCalculatorLayout(std::vector<std::unordered_map<std::string, 
     
     map.emplace(rootGrid->getId(), rootGrid); // add each of my new grids to the map. (or at least those we plan on re-rendering. I'm going to add all for now for the sake of simplicity.)
 
-    buildCalculatorGui(rootGrid, map);
+    buildCalculatorGui(rootGrid, map, window, calc);
     
 }
 
-void Display::drawGrid(const Grid& g, Window& window) {
-    
+void Display::drawGrid(Grid& g, Window& window) {
     if(g.getAbsoluteCoords().size() < 1) return;
-
+    
     // Draw grid itself
     std::vector<float> coords = g.getAbsoluteCoords();
 
@@ -51,7 +50,7 @@ void Display::drawGrid(const Grid& g, Window& window) {
             break;
     }
 
-    auto text = *g.getText();
+    auto text = g.getText();
 
     if(!text.empty()) {
         window.text(coords[0], coords[1], coords[2], coords[3], text);

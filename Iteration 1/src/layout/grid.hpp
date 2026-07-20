@@ -63,6 +63,7 @@ class Grid {
 
         // getters
         std::string getId() const { return id; };
+        std::string& getText() {return text; };
         std::vector<float> getCoordinates() const { return coordinates; };
         std::vector<float>& getAbsoluteCoords() { return absoluteCoordinates; };
         std::vector<float> getAbsoluteCoords() const { return absoluteCoordinates; };
@@ -85,9 +86,10 @@ class Grid {
         void setHeight(const std::string& height) { this->height = height; }
         void setAbsoluteCoords (const std::vector<float>& coordinates) { this->absoluteCoordinates = coordinates; };
         void setInteractable(bool& interactable) { this->interactable = interactable; };
-        void setOnMouseOver(std::function<void(Grid*)> onMouseOver) { this->onMouseOver = std::move(onMouseOver); };
-        void setOnMouseOut(std::function<void(Grid*)> onMouseOut) { this->onMouseOut = std::move(onMouseOut); };
-        void setOnClick(std::function<void(Grid*)> onClick) { this->onClick = std::move(onClick); };
+        void setOnMouseOver(std::function<void()> onMouseOver) { this->onMouseOver = std::move(onMouseOver); };
+        void setOnMouseOut(std::function<void()> onMouseOut) { this->onMouseOut = std::move(onMouseOut); };
+        void setOnClick(std::function<void()> onClick) { this->onClick = std::move(onClick); };
+        void setText(const std::string& text) { this->text = text; };
 
         // structural
         void addElement(Grid* elem);
@@ -100,9 +102,9 @@ class Grid {
 
         // mouse events
         
-        std::function<void(Grid*)> onMouseOver;
-        std::function<void(Grid*)> onMouseOut;
-        std::function<void(Grid*)> onClick;
+        std::function<void()> onMouseOver;
+        std::function<void()> onMouseOut;
+        std::function<void()> onClick;
 
     private:
         // for referencing - efficient rendering.

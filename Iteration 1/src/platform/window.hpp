@@ -63,7 +63,7 @@ class Window {
         void beginDraw();
         void endDraw();
         void loadImage(LPCWSTR fileName);
-        void invalidateDraw();
+        void invalidateDraw(const RECT* rect = nullptr);
         InputAction handleKey(int vkCode);
 
 

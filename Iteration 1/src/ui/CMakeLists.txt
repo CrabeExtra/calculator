@@ -6,6 +6,7 @@ add_library(ui
 target_link_libraries(ui
     layout
     platform
+    core
 )
 
 target_include_directories(ui PUBLIC

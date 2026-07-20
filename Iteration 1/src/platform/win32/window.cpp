@@ -234,6 +234,18 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 
             return 0;
         }
+        case WM_LBUTTONUP: {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onLMouseUp)
+                window->impl->onLMouseUp(x, y);
+
+            return 0;
+        }
         case WM_RBUTTONDOWN: {
             int x = GET_X_LPARAM(lParam);
             int y = GET_Y_LPARAM(lParam);
@@ -246,6 +258,18 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 
             return 0;
         }
+        case WM_RBUTTONUP: {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onRMouseUp)
+                window->impl->onRMouseUp(x, y);
+
+            return 0;
+        }
         case WM_MBUTTONDOWN: {
             int x = GET_X_LPARAM(lParam);
             int y = GET_Y_LPARAM(lParam);
@@ -255,6 +279,18 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 
             if(window->impl->onMMouseDown)
                 window->impl->onMMouseDown(x, y);
+
+            return 0;
+        }
+        case WM_MBUTTONUP: {
+            int x = GET_X_LPARAM(lParam);
+            int y = GET_Y_LPARAM(lParam);
+
+            Window* window =
+                (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+            if(window->impl->onMMouseUp)
+                window->impl->onMMouseUp(x, y);
 
             return 0;
         }

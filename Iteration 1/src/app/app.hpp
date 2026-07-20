@@ -3,11 +3,12 @@
 #include "display.hpp"
 #include "grid.hpp"
 #include "window.hpp"
+#include "calculator.hpp"
 
 class App {
     public: 
         App(HINSTANCE hInstance, int nCmdShow) : 
-            window( // TODO: I'm sure there's a better place/pattern to hardcode these 
+            window( // TODO: I'm sure there's a better place/pattern to hardcode these. Suych as an input handler instead of in App.hpp.
                 hInstance, 
                 nCmdShow, 
                 [this]() { this->render(); }, 
@@ -38,12 +39,17 @@ class App {
         void onKeyDown(Key k);
         void onKeyUp(Key k);
 
+        void setMouseDownId(std::string id) { mouseDownId = id; };
+        void setHoverId(std::string id) { hoverId = id; };
+
+        std::string getMouseDownId() { return mouseDownId; };
+        std::string getHoverId() { return hoverId; };
         /// @brief What is the mouse currently hovering.
         /// @param x 
         /// @param y 
         /// @return 
         Grid* getMouseOver(int x, int y);
-
+        
         std::string getDrawId() { return drawId; };
         
         void setDrawId(const std::string& drawId) { this->drawId = drawId; };
@@ -52,8 +58,10 @@ class App {
         int activeGridIndex = 0;
         Window window;
         Display display;
+        Calculator calculator;
         std::vector<std::unordered_map<std::string, Grid*>> rootGrids; // root grids vector, each root grid is essentially a page layout. I've added unordered map
                                                                        // so that grids can be indexed by ID. Please not that the grid with ID "root" is always the root grid.
         std::string drawId = "root";
         std::string hoverId = "";
+        std::string mouseDownId = "";
 };

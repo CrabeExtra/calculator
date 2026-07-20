@@ -4,6 +4,7 @@
 #include "window.hpp"
 #include "window_impl.hpp"
 #include "log.hpp"
+#include "calculator.hpp"
 
 /**
  * Creates the window, displays the window, begins core loop.
@@ -14,7 +15,7 @@ void App::run() {
 
     window.showWindow(); // show the window (duh)
 
-    display.buildCalculatorLayout(rootGrids); // build the layout of the calculator (will draw this later during render loop)
+    display.buildCalculatorLayout(rootGrids, window, calculator); // build the layout of the calculator (will draw this later during render loop)
 
     window.invalidateDraw(); // tell window 'building is finished, trigger a render'
 

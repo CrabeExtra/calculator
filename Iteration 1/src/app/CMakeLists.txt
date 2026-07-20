@@ -7,6 +7,7 @@ add_library(app
 target_link_libraries(app
     ui
     log
+    core
 )
 
 target_include_directories(app PUBLIC
