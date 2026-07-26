@@ -49,6 +49,8 @@ TODO:
             - Construction of Window.
         -   App level:
             - display needs to be renamed to ui and can be made static.
+
+    - Repair issue: calculator does not work as expected after installing rather than simply building and running from debug.
 - later iterations
     - linux support, unsure when I'll get to this, but I'm writing it so that it's kind of able to be ported.
     - More complex calculator calculations, support for larger numbers, overflow handling, more complex numberical methods, brackets, orders etc.
