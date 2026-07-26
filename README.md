@@ -15,6 +15,13 @@ cd "./build"
 cmake ..
 cmake --build .
 
+Install (at iteration dir):
+
+cd ..
+cmake -S . -B build "-DCMAKE_INSTALL_PREFIX=./program"
+cmake --build build --config Release
+cmake --install build --config Release
+
 -S just specifies the source, -B specifies the build output folder.
 .. copies the cmakelists configs and stuff.
 --build . compiles and builds (obviously run from the build directory).
@@ -24,14 +31,16 @@ To run:
 2. double click on the Calculator.exe
 
 Known issues: 
-- Don't calculate with an operatoras the final symbol, I don't have an error guard here, it'll just crash.
-    Pretty easy to repair, but not a big issue for a prototype.
+- Don't calculate with an operators the final symbol, I don't have an error guard here, it'll just crash.
+    For example calculating '5+' will error. Pretty easy to repair, but not a big issue for a prototype. 
 - Currently I've hacked the display to just error if the width of the characters exceeds the width of the screen. This method introduces an error as the % symbol is double the width, resulting in the user being able to cause some overflowed symbols to be burnt into the spacer row below the display. Really I should just truncate the display itself rather than the entire variable. This would also solve the 2 decimal place issue which caps accuracy as well as the display issue.
 
 TODO:
 - iteration 1
-    - Generic layout/grid system. Generic buttons etc. Button push tactility etc.
-    - completed calculator.
+    - Generic layout/grid system. Generic buttons etc. Button push tactility etc. (Done)
+    - completed calculator. (Done)
+- Iteration 2
+    - I need to completely separate the grid and generic GUI engine from the calculator so I can copy it into its own repository.
 - later iterations
     - linux support, unsure when I'll get to this, but I'm writing it so that it's kind of able to be ported.
     - More complex calculator calculations, support for larger numbers, overflow handling, more complex numberical methods, brackets, orders etc.

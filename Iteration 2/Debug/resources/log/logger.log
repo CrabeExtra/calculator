@@ -1,0 +1,6 @@
+[2026/07/26/12:43:51.660] [LOGGER] Making first time logging check...
+[2026/07/26/12:43:51.662] [LOGGER] reading config line: enabled=true
+[2026/07/26/12:43:51.666] [LOGGER] Logging is enabled.
+[2026/07/26/12:44:23.800] [LOGGER] Making first time logging check...
+[2026/07/26/12:44:23.804] [LOGGER] reading config line: enabled=false
+[2026/07/26/12:44:23.805] [LOGGER] Logging is disabled.
