@@ -85,7 +85,7 @@ class Grid {
         void setWidth(const std::string& width) { this->width = width; }
         void setHeight(const std::string& height) { this->height = height; }
         void setAbsoluteCoords (const std::vector<float>& coordinates) { this->absoluteCoordinates = coordinates; };
-        void setInteractable(bool& interactable) { this->interactable = interactable; };
+        void setInteractable(bool interactable) { this->interactable = interactable; };
         void setOnMouseOver(std::function<void()> onMouseOver) { this->onMouseOver = std::move(onMouseOver); };
         void setOnMouseOut(std::function<void()> onMouseOut) { this->onMouseOut = std::move(onMouseOut); };
         void setOnClick(std::function<void()> onClick) { this->onClick = std::move(onClick); };
@@ -115,7 +115,7 @@ class Grid {
         ///         Assumptions made include: 
         ///         1. All elements of a grid are spacially contained within that Grid.
         ///         2. Grids do not overlap other grids.
-        ///         3. We are only searching for interactible elements.
+        ///         3. We are only searching for interactable elements.
         /// @param x 
         /// @param y 
         Grid* getLeafAtLocation(int x, int y);
@@ -140,7 +140,7 @@ class Grid {
         GridDirection gridDirection;
 
         // mouse events.
-        bool interactable;
+        bool interactable = true;
 
         // structure
         Grid* container;

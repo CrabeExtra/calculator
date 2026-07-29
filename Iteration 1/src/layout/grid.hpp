@@ -85,7 +85,7 @@ class Grid {
         void setWidth(const std::string& width) { this->width = width; }
         void setHeight(const std::string& height) { this->height = height; }
         void setAbsoluteCoords (const std::vector<float>& coordinates) { this->absoluteCoordinates = coordinates; };
-        void setInteractable(bool& interactable) { this->interactable = interactable; };
+        void setInteractable(bool interactable);
         void setOnMouseOver(std::function<void()> onMouseOver) { this->onMouseOver = std::move(onMouseOver); };
         void setOnMouseOut(std::function<void()> onMouseOut) { this->onMouseOut = std::move(onMouseOut); };
         void setOnClick(std::function<void()> onClick) { this->onClick = std::move(onClick); };
@@ -126,7 +126,7 @@ class Grid {
         GridDirection gridDirection;
 
         // mouse events.
-        bool interactable;
+        bool interactable = false;
 
         // structure
         Grid* container;

@@ -8,8 +8,8 @@
             "name": "Debug",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/Iteration 2/program/CalculatorWin.exe",
-            "cwd": "${workspaceFolder}/Iteration 2/program"
+            "program": "${workspaceFolder}/Iteration 2/RelWithDebInfo/CalculatorWin.exe",
+            "cwd": "${workspaceFolder}/Iteration 2/RelWithDebInfo"
         }
     ]
 }

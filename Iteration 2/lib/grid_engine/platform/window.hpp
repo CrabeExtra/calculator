@@ -10,16 +10,6 @@
 #include "Windows.h"
 #include "key.hpp"
 
-enum class InputAction
-{
-    None,
-    Digit0, Digit1, Digit2, Digit3, Digit4,
-    Digit5, Digit6, Digit7, Digit8, Digit9,
-    Add, Subtract, Multiply, Divide,
-    Equals,
-    Clear
-};
-
 /**
  * Generic Window class. This is kept OS and rendering API agnostic. Just contains interface required for the grid system. These functions
  * can be implemented per OS and used to create the same APP.
@@ -37,12 +27,8 @@ class Window {
             std::function<void()> render, 
             std::optional<std::function<void(float width, float height)>> onResize,
             std::optional<std::function<void(int x, int y)>> onMouseMove,
-            std::optional<std::function<void(int x, int y)>> onLMouseDown,
-            std::optional<std::function<void(int x, int y)>> onLMouseUp,
-            std::optional<std::function<void(int x, int y)>> onMMouseDown,
-            std::optional<std::function<void(int x, int y)>> onMMouseUp,
-            std::optional<std::function<void(int x, int y)>> onRMouseDown,
-            std::optional<std::function<void(int x, int y)>> onRMouseUp,
+            std::optional<std::function<void(MouseButton button, int x, int y)>> onMouseDown,
+            std::optional<std::function<void(MouseButton button, int x, int y)>> onMouseUp,
             std::optional<std::function<void(Key k)>> onKeyDown,
             std::optional<std::function<void(Key k)>> onKeyUp
         );
@@ -64,7 +50,7 @@ class Window {
         void endDraw();
         void loadImage(LPCWSTR fileName);
         void invalidateDraw(const RECT* rect = nullptr);
-        InputAction handleKey(int vkCode);
+        void render();
 
 
     private:

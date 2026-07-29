@@ -44,6 +44,10 @@ Window::Window(
     
 }
 
+void Window::render() {
+    impl->render();
+}
+
 void Window::createWindow() {
 
     // Register the window class.

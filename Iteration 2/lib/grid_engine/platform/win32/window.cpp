@@ -18,12 +18,8 @@ Window::Window(
     std::function<void()> render, 
     std::optional<std::function<void(float width, float height)>> onResize,
     std::optional<std::function<void(int x, int y)>> onMouseMove,
-    std::optional<std::function<void(int x, int y)>> onLMouseDown,
-    std::optional<std::function<void(int x, int y)>> onLMouseUp,
-    std::optional<std::function<void(int x, int y)>> onMMouseDown,
-    std::optional<std::function<void(int x, int y)>> onMMouseUp,
-    std::optional<std::function<void(int x, int y)>> onRMouseDown,
-    std::optional<std::function<void(int x, int y)>> onRMouseUp,
+    std::optional<std::function<void(MouseButton button, int x, int y)>> onMouseDown,
+    std::optional<std::function<void(MouseButton button, int x, int y)>> onMouseUp,
     std::optional<std::function<void(Key k)>> onKeyDown,
     std::optional<std::function<void(Key k)>> onKeyUp
 ) {
@@ -33,15 +29,10 @@ Window::Window(
     impl->render = render;
     impl->onResize = *onResize;
     impl->onMouseMove = *onMouseMove;
-    impl->onLMouseDown = *onLMouseDown;
-    impl->onLMouseUp = *onLMouseUp;
-    impl->onMMouseDown = *onMMouseDown;
-    impl->onMMouseUp = *onMMouseUp;
-    impl->onRMouseDown = *onRMouseDown;
-    impl->onRMouseUp = *onRMouseUp;
+    impl->onMouseDown = *onMouseDown;
+    impl->onMouseUp = *onMouseUp;
     impl->onKeyDown = *onKeyDown;
     impl->onKeyUp = *onKeyUp;
-    
 }
 
 void Window::createWindow() {
@@ -229,8 +220,8 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-            if(window->impl->onLMouseDown)
-                window->impl->onLMouseDown(x, y);
+            if(window->impl->onMouseDown)
+                window->impl->onMouseDown(MouseButton::Left, x, y);
 
             return 0;
         }
@@ -241,8 +232,8 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-            if(window->impl->onLMouseUp)
-                window->impl->onLMouseUp(x, y);
+            if(window->impl->onMouseUp)
+                window->impl->onMouseUp(MouseButton::Left, x, y);
 
             return 0;
         }
@@ -253,8 +244,8 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-            if(window->impl->onRMouseDown)
-                window->impl->onRMouseDown(x, y);
+            if(window->impl->onMouseDown)
+                window->impl->onMouseDown(MouseButton::Right, x, y);
 
             return 0;
         }
@@ -265,8 +256,8 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-            if(window->impl->onRMouseUp)
-                window->impl->onRMouseUp(x, y);
+            if(window->impl->onMouseUp)
+                window->impl->onMouseUp(MouseButton::Right, x, y);
 
             return 0;
         }
@@ -277,8 +268,8 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-            if(window->impl->onMMouseDown)
-                window->impl->onMMouseDown(x, y);
+            if(window->impl->onMouseDown)
+                window->impl->onMouseDown(MouseButton::Middle, x, y);
 
             return 0;
         }
@@ -289,8 +280,8 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             Window* window =
                 (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-            if(window->impl->onMMouseUp)
-                window->impl->onMMouseUp(x, y);
+            if(window->impl->onMouseUp)
+                window->impl->onMouseUp(MouseButton::Middle, x, y);
 
             return 0;
         }

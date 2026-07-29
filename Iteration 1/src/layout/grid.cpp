@@ -131,3 +131,13 @@ void Grid::addRow(Grid* row) {
     
     elementsInThisContainer.push_back(row);
 }
+
+
+void Grid::setInteractable(bool interactable) {
+    this->interactable = interactable;
+    if(interactable) {
+        Grid* container = this->getContainer();
+        if(container != nullptr)
+            container->setInteractable(interactable);
+    } 
+}

@@ -1,80 +1,18 @@
 #include <exception>
 
 #include "app.hpp"
-#include "window.hpp"
-#include "window_impl.hpp"
 #include "log.hpp"
-#include "calculator.hpp"
-
 /**
  * Creates the window, displays the window, begins core loop.
  */
 void App::run() {
 
-    window.createWindow(); // create the window (duh)
+    display.initWindow();
 
-    window.showWindow(); // show the window (duh)
+    ui.buildCalculatorLayout(display.getRootGrids(), display, calculator); // build the layout of the calculator (will draw this later during render loop)
 
-    display.buildCalculatorLayout(rootGrids, window, calculator); // build the layout of the calculator (will draw this later during render loop)
+    display.invalidateWindow(); // tell window 'building is finished, trigger a render'
 
-    window.invalidateDraw(); // tell window 'building is finished, trigger a render'
-
-    window.messageLoop(); // accept input, translate input, handles any changes after showing the window.
+    display.startMessageLoop(); // accept input, translate input, handles any changes after showing the window.
 };
 
-void App::render() {
-    // this will be called during the render loop, and will be responsible for drawing the current page layout to the screen. 
-    window.beginDraw();
-    
-    try {
-        if(rootGrids.empty()) {
-            Log::warning(std::to_string(rootGrids.size()) + " root grids built.");
-            Log::warning("No root grids to render.");
-            throw std::exception("Rendering error. See logs.");
-        }
-        
-        if(!getDrawId().empty()) {
-
-            if(activeGridIndex >= rootGrids.size()) {
-                Log::error("Attempting to access active grid out of bounds.");
-                Log::error("Active grid: " + std::to_string(activeGridIndex));
-                Log::error("Maximum active grid: " + rootGrids.size());
-                throw std::exception("Rendering error. See logs.");
-            }
-
-            auto& map = rootGrids[activeGridIndex]; // if this errors it will catch anyway.
-            auto mapEntry = map.find(getDrawId());
-
-            if(mapEntry == map.end()) {
-                Log::error("RootGrids improperly initialised. RootGrid entirely missing during rendering.");
-                Log::error("Draw ID: " + getDrawId());
-                throw std::exception("Rendering error. See logs.");
-            }
-
-            Grid* g = mapEntry->second;
-
-            if(g == nullptr) {
-                Log::error("RootGrid null during rendering.");
-                Log::error("Draw ID: " + getDrawId());
-                throw std::exception("Rendering error. See logs.");
-            }
-            
-            display.drawGrid(*g, window); // draw the grid.
-
-            setDrawId(""); // Once drawn, set the draw ID to empty to safeguard unnecessary re-renders.
-        }
-
-        
-    } catch(const std::exception& e) {
-        std::string msg = std::string("Exception: ") + e.what();
-        Log::error(msg);
-    }
-    
-    window.endDraw();
-
-}
-
-void App::onResize(float width, float height) {
-    setDrawId("root");
-    render();
-}

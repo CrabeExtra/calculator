@@ -22,7 +22,7 @@ Grid* Grid::getLeafAtLocation(int x, int y) {
 
     // using recursion would break down for many elements. I know I've used recursion elsewhere in this program though - I should move away from recursion if I plan on reusing the code for more complex projects.
     while(true) {
-        std::vector<Grid*> elements = this->getElements();
+        std::vector<Grid*> elements = currentGrid->getElements();
 
         bool foundInteractiveLeaf = false;
 
@@ -37,7 +37,7 @@ Grid* Grid::getLeafAtLocation(int x, int y) {
         }
 
         if(!foundInteractiveLeaf) {
-            return currentGrid; // current grid was searched and no interactible contained elements. Then this element is the element being clicked.
+            return currentGrid; // current grid was searched and no interactable contained elements. Then this element is the element being clicked.
         }; // exit condition, looped elements and found nothing, this is the leaf node.
         
     }

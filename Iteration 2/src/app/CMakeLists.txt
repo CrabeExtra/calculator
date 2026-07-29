@@ -1,13 +1,12 @@
 add_library(app
     app.cpp
-    app_mouse.cpp
-    app_keyboard.cpp
 )
 
 target_link_libraries(app
     ui
     log
     core
+    grid_engine
 )
 
 target_include_directories(app PUBLIC
