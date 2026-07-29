@@ -50,8 +50,8 @@ TODO:
         -   App level:
             - display needs to be renamed to ui and can be made static. (Done)
 
-    - Repair issue: calculator does not work as expected after installing rather than simply building and running from debug.
-    - Ensure grid_engine's readme describes how to ensure resources are flattened to the exe dir.
+    - Repair issue: calculator does not work as expected after installing rather than simply building and running from debug. (done)
+    - Ensure grid_engine's readme describes how to ensure resources are flattened to the exe dir. (done)
     - TODO: 29/07/2026: I need to repair an error where the screen isn't invalidated on resize (done). In addition, I need to repair an error introduced while separating the app from the engine where button presses do not register. (done)
 - later iterations
     - linux support, unsure when I'll get to this, but I'm writing it so that it's kind of able to be ported.
